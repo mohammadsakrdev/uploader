@@ -30,6 +30,8 @@ exports.all = async (req, res, next) => {
   test.forEach(async file => {
     try {
       console.log('@Download Starting');
+      console.log(path.join(process.env.TEST_DOWNLOAD_API, file));
+      console.log(path.join(process.env.TEST_LOGS_PATH, file));
       await download(path.join(process.env.TEST_DOWNLOAD_API, file)).pipe(
         createWriteStream(path.join(process.env.TEST_LOGS_PATH, file))
       );
