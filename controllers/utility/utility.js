@@ -1,4 +1,7 @@
 const path = require('path');
+const moment = require('moment');
+
+console.log(secondsDiff);
 exports.upload = (req, res, next, pathToUpload) => {
   console.log('Upload Called');
   if (req.header('Upload-Auth') !== process.env.SECRET_KEY.toString()) {
@@ -19,6 +22,7 @@ exports.upload = (req, res, next, pathToUpload) => {
 
   Object.keys(req.files).forEach(key => {
     const file = req.files[key];
+    const startDate = moment();
     // Use the mv() method to place the file somewhere on your server
     file.mv(path.join(pathToUpload, file.name), err => {
       if (err) {
@@ -26,8 +30,11 @@ exports.upload = (req, res, next, pathToUpload) => {
         return;
       }
       uploaded.push(file.name);
-      console.log(uploaded);
-      console.log(`File ${file.name} is uploaded successfully`);
+      const endDate = moment();
+      const secondsDiff = endDate.diff(startDate, 'seconds');
+      console.log(
+        `File ${file.name} is uploaded successfully in ${secondsDiff}`
+      );
     });
   });
   return res.status(200).send({ success: true, message: 'Files Uploaded !' });

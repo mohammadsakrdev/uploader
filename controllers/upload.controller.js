@@ -10,3 +10,10 @@ exports.uploadToLive = (req, res, next) => {
 exports.uploadToTest = (req, res, next) => {
   upload(req, res, next, process.env.TEST_LOGS_PATH);
 };
+
+exports.all = (req, res, next) => {
+  const { old, live, test } = req.body;
+  console.log('old', old);
+  console.log('live', live);
+  console.log('test', test);
+};
