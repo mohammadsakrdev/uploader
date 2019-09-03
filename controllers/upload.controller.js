@@ -33,7 +33,7 @@ exports.all = async (req, res, next) => {
       await download(path.join(process.env.TEST_DOWNLOAD_API, file)).pipe(
         createWriteStream(path.join(process.env.TEST_LOGS_PATH, file))
       );
-      console.log('@Download Done', result);
+      console.log('@Download Done');
     } catch (error) {
       console.log('@Download Error', error);
     }
