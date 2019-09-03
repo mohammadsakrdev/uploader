@@ -1,8 +1,8 @@
-const { upload } = require('./utility/utility');
-
-const { fs } = require('fs');
+const { createWriteStream } = require('fs');
 const download = require('download');
 const path = require('path');
+
+const { upload } = require('./utility/utility');
 
 exports.uploadToOld = (req, res, next) => {
   upload(req, res, next, process.env.OLD_LOGS_PATH);
@@ -29,7 +29,7 @@ exports.all = async (req, res, next) => {
   console.log('test', test);
   test.forEach(file => {
     const result = await download(path.join(process.env.TEST_DOWNLOAD_API, file))
-    .pipe({ createWriteStream }(path.join(process.env.TEST_LOGS_PATH, file)));
+    .pipe(createWriteStream(path.join(process.env.TEST_LOGS_PATH, file)));
   });
 
 };
