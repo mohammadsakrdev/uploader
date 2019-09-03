@@ -22,8 +22,8 @@ exports.upload = (req, res, next, pathToUpload) => {
     // Use the mv() method to place the file somewhere on your server
     file.mv(path.join(pathToUpload, file.name), err => {
       if (err) {
-        return;
         console.error('file.mv', err);
+        return;
       }
       uploaded.push(file.name);
       console.log(uploaded);
