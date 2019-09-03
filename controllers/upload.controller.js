@@ -28,10 +28,14 @@ exports.all = async (req, res, next) => {
   console.log('live', live);
   console.log('test', test);
   test.forEach(async file => {
-    console.log('@Download Starting');
-    const result = await download(
-      path.join(process.env.TEST_DOWNLOAD_API, file)
-    ).pipe(createWriteStream(path.join(process.env.TEST_LOGS_PATH, file)));
-    console.log('@Download Done', result);
+    try {
+      console.log('@Download Starting');
+      await download(path.join(process.env.TEST_DOWNLOAD_API, file)).pipe(
+        createWriteStream(path.join(process.env.TEST_LOGS_PATH, file))
+      );
+      console.log('@Download Done', result);
+    } catch (error) {
+      console.log('@Download Error', error);
+    }
   });
 };
