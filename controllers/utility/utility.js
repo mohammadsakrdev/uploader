@@ -1,7 +1,6 @@
 const path = require('path');
 const moment = require('moment');
 
-console.log(secondsDiff);
 exports.upload = (req, res, next, pathToUpload) => {
   console.log('Upload Called');
   if (req.header('Upload-Auth') !== process.env.SECRET_KEY.toString()) {
