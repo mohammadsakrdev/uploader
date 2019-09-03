@@ -27,9 +27,9 @@ exports.all = async (req, res, next) => {
   console.log('old', old);
   console.log('live', live);
   console.log('test', test);
-  test.forEach(file => {
-    const result = await download(path.join(process.env.TEST_DOWNLOAD_API, file))
-    .pipe(createWriteStream(path.join(process.env.TEST_LOGS_PATH, file)));
+  test.forEach(async file => {
+    const result = await download(
+      path.join(process.env.TEST_DOWNLOAD_API, file)
+    ).pipe(createWriteStream(path.join(process.env.TEST_LOGS_PATH, file)));
   });
-
 };
