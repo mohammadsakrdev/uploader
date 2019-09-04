@@ -16,7 +16,7 @@ exports.uploadToTest = (req, res, next) => {
   upload(req, res, next, process.env.TEST_LOGS_PATH);
 };
 
-exports.all = async (req, res, next) => {
+exports.all = (req, res, next) => {
   if (req.header('Upload-Auth') !== process.env.SECRET_KEY.toString()) {
     console.log('Upload-Auth not correct');
     return res
@@ -27,17 +27,18 @@ exports.all = async (req, res, next) => {
   console.log('old', old);
   console.log('live', live);
   console.log('test', test);
-  test.forEach(async file => {
+  test.forEach(file => {
     try {
       console.log('@Download Starting');
       console.log(path.join(process.env.TEST_DOWNLOAD_API, file));
       console.log(path.join(process.env.TEST_LOGS_PATH, file));
-      await download(path.join(process.env.TEST_DOWNLOAD_API, file)).pipe(
+      download(path.join(process.env.TEST_DOWNLOAD_API, file)).pipe(
         createWriteStream(path.join(process.env.TEST_LOGS_PATH, file))
       );
       console.log('@Download Done');
     } catch (error) {
       console.log('@Download Error', error);
+      return;
     }
   });
 };
